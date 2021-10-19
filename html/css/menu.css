@@ -15,8 +15,8 @@
     display: flex;
     flex-flow: column wrap;
 
-    background-color: rgb(23 23 23 / 80%);
-    /*border: 2px solid rgb(236, 240, 241);*/
+    background-color: rgb(117 117 117 / 0.8);
+    /*border: 2px solid rgb(214 214 214);*/
 
     width: 47vh;
     max-height: 78vh;
@@ -31,8 +31,8 @@
     text-transform: uppercase;
     font-size: 18pt;
     font-weight: 400;
-    color: rgb(236, 240, 241);
-    background-color: #dc143c;
+    color: rgb(255 0 255 / 1);
+    background-color: rgb(117 117 117 / 1) 0 255 / 1);
     border-radius: .6vh;
     margin: 1vh;
     padding: .5vh .5vh .5vh .5vh;
@@ -46,8 +46,8 @@
     text-transform: uppercase;
     font-size: 12pt;
     font-weight: 300;
-    color: #171717;
-    background-color: #ededed;
+    color: rgb(255 0 255 / 1)23 23);
+    background-color: rgb(117 117 117 / 1);
     margin-bottom: 1vh;
     margin-left: 1vh;
     width: 45vh;
@@ -66,7 +66,7 @@
     font-size: 14pt;
     font-style: normal;
     font-weight: 300;
-    color: rgb(236, 240, 241);
+    color: rgb(255 0 255 / 1);
 
     list-style-type: none;
     text-align: left;
@@ -94,8 +94,8 @@
 
 .item_selected
 {
-    background-color: rgb(236, 240, 241) !important;
-    color: black;
+    background-color: rgb(117 117 117 / 1) !important;
+    color: rgb(255 0 255 / 1);
     font-weight: 400;
 }
 
@@ -106,9 +106,9 @@
     text-transform: uppercase;
     font-size: 12pt;
     font-weight: 400;
-    color: #171717;
+    color: rgb(255 0 255 / 1)23 23);
     
-    background-color: #ededed;
+    background-color: rgb(117 117 117 / 1);
 
     width: 47vh;
 }
@@ -119,10 +119,10 @@
     padding-bottom: 5.5px;
     text-align: center;
     font-size: 18pt;
-    color: #ededed;
+    color: rgb(255 0 255 / 1) 117 117 / 1);
     width: 47vh;
     margin-top: 1vh;
     border-bottom-left-radius: 1vh;
     border-bottom-right-radius: 1vh;
-    background-color: #dc143c;
+    background-color: rgb(255 0 255 / 1);
 }
