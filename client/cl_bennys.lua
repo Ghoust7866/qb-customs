@@ -1,3 +1,5 @@
+local QBCore = exports['qb-core']:GetCoreObject()
+
 local isPlyInBennys = false
 local plyFirstJoin = false
 local nearDefault = false
@@ -52,59 +54,7 @@ end
 local function saveVehicle()
     local plyPed = PlayerPedId()
     local veh = GetVehiclePedIsIn(plyPed, false)
-    local vehicleMods = {
-        neon = {},
-        colors = {},
-        extracolors = {},
-        dashColour = -1,
-        interColour = -1,
-        lights = {},
-        tint = GetVehicleWindowTint(veh),
-        wheeltype = GetVehicleWheelType(veh),
-        platestyle = GetVehicleNumberPlateTextIndex(veh),
-        mods = {},
-        smokecolor = {},
-        xenonColor = -1,
-        oldLiveries = 24,
-        extras = {},
-        plateIndex = 0,
-    }
-
-    vehicleMods.xenonColor = GetCurrentXenonColour()
-    vehicleMods.lights[1], vehicleMods.lights[2], vehicleMods.lights[3] = GetVehicleNeonLightsColour(veh)
-    vehicleMods.colors[1], vehicleMods.colors[2] = GetVehicleColours(veh)
-    vehicleMods.extracolors[1], vehicleMods.extracolors[2] = GetVehicleExtraColours(veh)
-    vehicleMods.smokecolor[1], vehicleMods.smokecolor[2], vehicleMods.smokecolor[3] = GetVehicleTyreSmokeColor(veh)
-    vehicleMods.dashColour = GetVehicleInteriorColour(veh)
-    vehicleMods.interColour = GetVehicleDashboardColour(veh)
-    vehicleMods.oldLiveries = GetVehicleLivery(veh)
-    vehicleMods.plateIndex = GetVehicleNumberPlateTextIndex(veh)
-
-    for i = 0, 3 do
-        vehicleMods.neon[i] = IsVehicleNeonLightEnabled(veh, i)
-    end
-
-    for i = 0,16 do
-        vehicleMods.mods[i] = GetVehicleMod(veh,i)
-    end
-
-    for i = 17, 22 do
-        vehicleMods.mods[i] = IsToggleModOn(veh, i)
-    end
-
-    for i = 23, 48 do
-        vehicleMods.mods[i] = GetVehicleMod(veh,i)
-    end
-
-    for i = 1, 12 do
-        local ison = IsVehicleExtraTurnedOn(veh, i)
-        if 1 == tonumber(ison) then
-            vehicleMods.extras[i] = 1
-        else
-            vehicleMods.extras[i] = 0
-        end
-    end
-	local myCar = QBCore.Functions.GetVehicleProperties(veh)
+    local myCar = QBCore.Functions.GetVehicleProperties(veh)
     TriggerServerEvent('updateVehicle',myCar)  
 end
 
@@ -739,8 +689,7 @@ function ExitBennys()
     isPlyInBennys = false
 end
 
-RegisterNetEvent('event:control:bennys')
-AddEventHandler('event:control:bennys', function(useID)
+RegisterNetEvent('event:control:bennys', function(useID)
     if IsPedInAnyVehicle(PlayerPedId(), false) then
         bennyHeading = bennyGarages[useID].coords.w
         if not isPlyInBennys then -- Bennys
@@ -839,11 +788,13 @@ Citizen.CreateThread(function()
                         if not isPlyInBennys then
                             Draw3DText(v.coords.x, v.coords.y, v.coords.z + 0.5, "[Press ~p~E~w~ - Enter Benny's Motorworks]", 255, 255, 255, 255, 4, 0.45, true, true, true, true, 0, 0, 0, 0, 55)
                             if IsControlJustReleased(1, 38) then
-                                if (v.useJob and isAuthorized((QBCore.Functions.GetPlayerData().job.name), k)) or not v.useJob then
-                                    TriggerEvent('event:control:bennys', k)
-                                else
-                                    QBCore.Functions.Notify("You are not authorized", "error")
-                                end
+				if GetPedInVehicleSeat(GetVehiclePedIsIn(PlayerPedId()), -1) == PlayerPedId() then
+					if (v.useJob and isAuthorized((QBCore.Functions.GetPlayerData().job.name), k)) or not v.useJob then
+					    TriggerEvent('event:control:bennys', k)
+					else
+					    QBCore.Functions.Notify("You are not authorized", "error")
+					end
+				end
                             end
                         else
                             disableControls()
@@ -860,15 +811,13 @@ Citizen.CreateThread(function()
 end)
 
 --#[Event Handlers]#--
-RegisterNetEvent("qb-customs:purchaseSuccessful")
-AddEventHandler("qb-customs:purchaseSuccessful", function()
+RegisterNetEvent("qb-customs:purchaseSuccessful", function()
     isPurchaseSuccessful = true
     attemptingPurchase = false
     QBCore.Functions.Notify("Purchase Successful")
 end)
 
-RegisterNetEvent("qb-customs:purchaseFailed")
-AddEventHandler("qb-customs:purchaseFailed", function()
+RegisterNetEvent("qb-customs:purchaseFailed", function()
     isPurchaseSuccessful = false
     attemptingPurchase = false
     QBCore.Functions.Notify("Not enough money", "error")
